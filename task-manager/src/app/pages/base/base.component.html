@@ -1,1 +1,12 @@
-<p>base works!</p>
+<mat-drawer-container autosize>
+    <div class="base-comp">
+        <app-task-card *ngFor="let card of cards" [taskCardInfo]="card"></app-task-card>
+        <input type="text" #test>
+        <mat-icon (click)="createCard(test)" >add</mat-icon>
+        <button (click)="toggler()">open sideNav</button>
+    </div>
+
+    <mat-drawer position="end" mode="side" [(opened)]="openedDrawer">
+{{'ghbdtn'}}
+    </mat-drawer>
+</mat-drawer-container>

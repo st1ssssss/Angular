@@ -8,9 +8,3 @@ export const routes: Routes = [
     {path:'task/:id', component:TaskPageComponent},
     {path:'**', redirectTo:'', component: BaseComponent}
 ];
-
-@NgModule({
-    imports:[RouterModule.forRoot(routes)],
-    exports:[RouterModule]
-})
-export class AppRoutingModule{}

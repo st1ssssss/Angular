@@ -1,0 +1,14 @@
+<mat-card class="card">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon class="card-header-icon">task</mat-icon>
+        </div>
+        <mat-card-title class="card-header">{{taskCardInfo.taskTitle}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-info-container">
+        <span class="card-info-assigned">Assigned to {{taskCardInfo.taskAssignedTo}}</span>
+        <span [ngClass]="priorityClass()">{{taskCardInfo.taskPriority}}</span>
+        <span class="card-info-status">{{taskCardInfo.taskStatus}}</span>
+        <span>{{taskCardInfo.taskDeadline}}</span>
+    </mat-card-content>
+</mat-card>
