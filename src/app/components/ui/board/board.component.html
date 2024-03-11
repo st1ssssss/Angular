@@ -9,6 +9,6 @@
         <app-create-form *ngIf="addMode" [status]="boardTitle"></app-create-form>
     </mat-card-header>
     <mat-card-content class="board-content">
-        <ng-content></ng-content>
+        <app-task-card *ngFor="let card of cardsInfo" [taskCardInfo]="card"></app-task-card>
     </mat-card-content>
 </mat-card>
