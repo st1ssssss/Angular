@@ -1,1 +1,14 @@
-
+<mat-card class="board">
+    <mat-card-header class="card-header-container">
+        <div class="card-header-firstline">
+            <mat-card-title class="board-title">
+                {{boardTitle}}
+            </mat-card-title>
+            <mat-icon (click)="addMode = !addMode">add_circle</mat-icon>
+        </div>
+        <app-create-form *ngIf="addMode" [status]="boardTitle"></app-create-form>
+    </mat-card-header>
+    <mat-card-content class="board-content">
+        <ng-content></ng-content>
+    </mat-card-content>
+</mat-card>

@@ -1,10 +1,11 @@
-type taskPriorities = 'LOW'|'MEDIUM'|'HIGH' 
-type TaskStatuses = 'TODO'|'INPROGRESS'|'DONE'
+export type taskPriorities = 'LOW'|'MEDIUM'|'HIGH' 
+export type TaskStatuses = 'TODO'|'INPROGRESS'|'DONE'
 
 export interface ITaskCard{
+    taskId:number
     taskTitle: string
-    taskAssignedTo: string
-    taskPriority: taskPriorities
+    taskAssignedTo: string|undefined
+    taskPriority: taskPriorities|undefined
     taskStatus: TaskStatuses
-    taskDeadline: Date
+    taskDeadline: Date|undefined
 }

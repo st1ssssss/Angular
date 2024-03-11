@@ -1,8 +1,10 @@
 <mat-drawer-container autosize>
     <div class="base-comp">
-        <app-task-card *ngFor="let card of cards" [taskCardInfo]="card"></app-task-card>
-        <input type="text" #test>
-        <mat-icon (click)="createCard(test)" >add</mat-icon>
+        <div class="base-comp-boards">
+            <app-board *ngFor="let status of statuses" [title]="status">
+                <app-task-card *ngFor="let card of cards" [taskCardInfo]="card"></app-task-card>
+            </app-board>
+        </div>
         <button (click)="toggler()">open sideNav</button>
     </div>
 
