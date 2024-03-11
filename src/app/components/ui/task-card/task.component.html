@@ -10,5 +10,6 @@
         <span [ngClass]="priorityClass()">{{taskCardInfo.taskPriority}}</span>
         <span class="card-info-status">{{taskCardInfo.taskStatus}}</span>
         <span>{{taskCardInfo.taskDeadline}}</span>
+        <button (click)="removeTask()" mat-button>Delete</button>
     </mat-card-content>
 </mat-card>

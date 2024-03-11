@@ -3,16 +3,21 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import { ITaskCard } from '../../../pages/base/config/config';
 import {CommonModule} from '@angular/common'
+import {MatButtonModule} from '@angular/material/button';
+import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
+
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [MatIconModule, MatCardModule, CommonModule],
+  imports: [MatIconModule, MatCardModule, CommonModule, MatButtonModule],
   templateUrl: './task.component.html',
   styleUrl: './task.component.sass'
 })
 export class TaskComponent {
-@Input('taskCardInfo') taskCardInfo:ITaskCard
+constructor(private localStorageService:LocalStorageService){
+}
 
+@Input('taskCardInfo') taskCardInfo:ITaskCard
 priorityClass(){
   switch (this.taskCardInfo.taskPriority) {
     case 'HIGH':
@@ -24,5 +29,8 @@ priorityClass(){
     default:
       return ''
   }
+}
+removeTask(){
+  this.localStorageService.deleteOne(this.taskCardInfo)
 }
 }

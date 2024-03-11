@@ -23,81 +23,9 @@ export class BaseComponent {
       this.reduceData(data)
     })
   }
-  
   openedDrawer:boolean = false
 
   statuses:TaskStatuses[] = ['TODO','INPROGRESS', 'DONE']
-//   public cards:ITaskCard[]=[{
-//     taskTitle: 'Card1',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'LOW',
-//     taskStatus: 'INPROGRESS',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },
-//   {
-//     taskTitle: 'Card2',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'MEDIUM',
-//     taskStatus: 'DONE',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },
-//   {
-//     taskTitle: 'Card3',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'HIGH',
-//     taskStatus: 'TODO',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },{
-//     taskTitle: 'Card1',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'LOW',
-//     taskStatus: 'INPROGRESS',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },
-//   {
-//     taskTitle: 'Card2',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'MEDIUM',
-//     taskStatus: 'DONE',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },
-//   {
-//     taskTitle: 'Card3',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'HIGH',
-//     taskStatus: 'TODO',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },{
-//     taskTitle: 'Card1',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'LOW',
-//     taskStatus: 'INPROGRESS',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },
-//   {
-//     taskTitle: 'Card2',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'MEDIUM',
-//     taskStatus: 'DONE',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },
-//   {
-//     taskTitle: 'Card3',
-//     taskAssignedTo: 'worker 1',
-//     taskPriority: 'HIGH',
-//     taskStatus: 'TODO',
-//     taskDeadline: new Date,
-//     taskId:Date.now()
-//   },
-// ]
 public cards:ITaskCard[] = [] 
 
   //для открытия side-menu
@@ -105,8 +33,14 @@ public cards:ITaskCard[] = []
     this.openedDrawer = !this.openedDrawer
     console.log(this.openedDrawer)
   }
-  reduceData(val:ITaskCard){
-    let stored = this.cards
-    this.cards = [val, ...stored]
+  reduceData(val:ITaskCard[]){
+    for(let i = 0;i<val.length;i++){
+      if(this.cards.includes(val[i])){
+        this.cards = this.cards.filter(card=>card.taskId!=val[i].taskId)
+      }else{
+        this.cards=[...val, ...this.cards]
+      }
+    }
+    console.log(this.cards)
   }
 }

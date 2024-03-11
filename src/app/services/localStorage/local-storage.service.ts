@@ -16,7 +16,7 @@ export class LocalStorageService {
    setTask(card:ITaskCard){
     const storedData =  JSON.parse(localStorage.getItem(card.taskStatus)!)
     localStorage.setItem(card.taskStatus, JSON.stringify([card, ...storedData]))
-    this.storageSubject.next(card) 
+    this.storageSubject.next([card]) 
    }
 
   get(status: TaskStatuses): Observable<ITaskCard[]> {
@@ -26,11 +26,11 @@ export class LocalStorageService {
   }
   
   deleteOne(card:ITaskCard) {
-    const value = localStorage.getItem(card.taskStatus);
-    console.log(value)
-    if (value) {
-      localStorage.removeItem(value);
-      this.storageSubject.next(null);
+    const storedData:ITaskCard[] = JSON.parse(localStorage.getItem(card.taskStatus)!);
+    const reducedData = storedData.filter(el=>el.taskId != card.taskId) 
+    if (reducedData) {
+      localStorage.setItem(card.taskStatus, JSON.stringify(reducedData))
+      this.storageSubject.next([card])
     }
 }
 }

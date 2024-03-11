@@ -14,14 +14,16 @@ export class CreateFormComponent {
   task:ITaskCard
   @Input('status')status: TaskStatuses
   createTask(val:HTMLInputElement){
-    this.task = {
-      taskTitle: val.value,
-      taskDeadline: new Date,
-      taskAssignedTo:'',
-      taskPriority:undefined,
-      taskStatus: this.status,
-      taskId: Date.now()
+    if(val.value){
+      this.task = {
+        taskTitle: val.value,
+        taskDeadline: new Date,
+        taskAssignedTo:'',
+        taskPriority:undefined,
+        taskStatus: this.status,
+        taskId: Date.now()
+      }
+      this.localStorageService.setTask(this.task)
     }
-    this.localStorageService.setTask(this.task)
   }
 }

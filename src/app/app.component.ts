@@ -2,7 +2,7 @@
 import { Component,  } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/ui/header/header.component';
-
+import { LocalStorageService } from './services/localStorage/local-storage.service'; 
 @Component({
   selector: 'app-root',
   standalone: true,
