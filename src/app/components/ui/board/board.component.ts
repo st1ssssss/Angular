@@ -15,5 +15,8 @@ import { CreateFormComponent } from '../create-form/create-form.component';
 export class BoardComponent {
   @Input('title') boardTitle:TaskStatuses
   @Input('cardsInfo') cardsInfo: ITaskCard[]=[]
+  ngOnChanges(){
+    this.cardsInfo = this.cardsInfo.filter(el=> el.taskStatus === this.boardTitle)
+  }
   addMode:boolean = false
 }

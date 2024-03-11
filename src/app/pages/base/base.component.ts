@@ -19,6 +19,9 @@ export class BaseComponent {
   }
   ngOnInit(){
     this.statuses.forEach(status=>this.localStorageService.init(status))
+    this.localStorageService.storageObservable$.subscribe(data=>{
+      this.reduceData(data)
+    })
   }
   
   openedDrawer:boolean = false
@@ -95,12 +98,15 @@ export class BaseComponent {
 //     taskId:Date.now()
 //   },
 // ]
-public cards:ITaskCard[]
+public cards:ITaskCard[] = [] 
 
-subTODO = this.localStorageService.get('TODO').subscribe(data=>this.cards=data)
   //для открытия side-menu
   toggler(){
     this.openedDrawer = !this.openedDrawer
     console.log(this.openedDrawer)
+  }
+  reduceData(val:ITaskCard){
+    let stored = this.cards
+    this.cards = [val, ...stored]
   }
 }
