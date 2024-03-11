@@ -4,11 +4,7 @@
             <app-board *ngFor="let status of statuses" [cardsInfo]="cards" [title]="status">
             </app-board>
         </div>
-        <button (click)="toggler()">open sideNav</button>
-        <mat-icon  >add</mat-icon>
     </div>
 
-    <mat-drawer position="end" mode="side" [(opened)]="openedDrawer">
-{{'ghbdtn'}}
-    </mat-drawer>
+<app-edit-side-bar></app-edit-side-bar>
 </mat-drawer-container>

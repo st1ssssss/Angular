@@ -19,6 +19,13 @@ export class LocalStorageService {
     this.storageSubject.next([card]) 
    }
 
+   editTask(card:ITaskCard){
+    const storedData:ITaskCard[] =  JSON.parse(localStorage.getItem(card.taskStatus)!)
+    const reduceData = storedData.filter(el=>el.taskId != card.taskId)
+    localStorage.setItem(card.taskStatus, JSON.stringify([card, ...reduceData]))
+    this.storageSubject.next(card)
+   }
+
   get(status: TaskStatuses): Observable<ITaskCard[]> {
     return new Observable((observer) => {
       observer.next(JSON.parse(localStorage.getItem(status)!));

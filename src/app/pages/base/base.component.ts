@@ -6,11 +6,12 @@ import { MatSidenavModule} from '@angular/material/sidenav';
 import {CommonModule} from '@angular/common'
 import { BoardComponent } from '../../components/ui/board/board.component';
 import { LocalStorageService } from '../../services/localStorage/local-storage.service';
+import { EditSideBarComponent } from '../../components/ui/edit-side-bar/edit-side-bar.component';
 
 @Component({
   selector: 'app-base',
   standalone: true,
-  imports: [BoardComponent,TaskComponent,MatIcon, MatSidenavModule, CommonModule],
+  imports: [EditSideBarComponent, BoardComponent,TaskComponent,MatIcon, MatSidenavModule, CommonModule],
   templateUrl: './base.component.html',
   styleUrl: './base.component.sass'
 })
@@ -23,16 +24,12 @@ export class BaseComponent {
       this.reduceData(data)
     })
   }
-  openedDrawer:boolean = false
 
   statuses:TaskStatuses[] = ['TODO','INPROGRESS', 'DONE']
 public cards:ITaskCard[] = [] 
 
   //для открытия side-menu
-  toggler(){
-    this.openedDrawer = !this.openedDrawer
-    console.log(this.openedDrawer)
-  }
+
   reduceData(val:ITaskCard[]){
     for(let i = 0;i<val.length;i++){
       if(this.cards.includes(val[i])){

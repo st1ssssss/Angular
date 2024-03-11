@@ -1,0 +1,26 @@
+<mat-drawer position="end" mode="side" [(opened)]="openedDrawer">
+    <form class="flex-col">
+        <mat-form-field class="example-full-width">
+            <mat-label>Task title</mat-label>
+            <input matInput [value]="cardInfo.taskTitle">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Task assigner</mat-label>
+            <input matInput [value]="cardInfo.taskAssignedTo">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Task Priority</mat-label>
+            <mat-select matNativeControl required>
+                @for (item of optionTaskPriorities; track item){
+                    <mat-option [value]="item" >{{item}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Task assigner</mat-label>
+            <input matInput type="date">
+        </mat-form-field>
+        <button mat-button>Submit</button>
+    </form>
+    
+</mat-drawer>
