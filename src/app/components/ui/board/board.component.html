@@ -8,6 +8,7 @@
         </div>
         <app-create-form *ngIf="addMode" [status]="boardTitle"></app-create-form>
     </mat-card-header>
+    <mat-divider></mat-divider>
     <mat-card-content class="board-content">
         <app-task-card *ngFor="let card of cardsInfo" [taskCardInfo]="card"></app-task-card>
     </mat-card-content>

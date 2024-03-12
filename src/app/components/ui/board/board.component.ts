@@ -4,11 +4,12 @@ import {MatCardModule} from '@angular/material/card';
 import {CommonModule} from '@angular/common'
 import { TaskStatuses,ITaskCard } from '../../../pages/base/config/config';
 import { TaskComponent } from '../task-card/task.component';
+import {MatDividerModule} from '@angular/material/divider';
 import { CreateFormComponent } from '../create-form/create-form.component';
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [TaskComponent, CreateFormComponent, MatIconModule, MatCardModule, CommonModule],
+  imports: [MatDividerModule, TaskComponent, CreateFormComponent, MatIconModule, MatCardModule, CommonModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.sass'
 })

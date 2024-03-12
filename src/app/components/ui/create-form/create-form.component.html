@@ -1,6 +1,9 @@
 <div>
-    <form class="create-form">
-        <input type="text" name="title" #taskHeader>
-        <mat-icon (click)="createTask(taskHeader)">add</mat-icon>
+    <form #formCreate="ngForm" (ngSubmit)="createTask(formCreate)" class="create-form">
+        <mat-form-field>
+            <mat-label>Create your task </mat-label>
+            <input matInput [(ngModel)]="titleCreate" type="text" name="titleCreate">
+        </mat-form-field>
+        <button mat-flat-button>add</button>
     </form>
 </div>

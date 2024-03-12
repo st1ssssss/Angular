@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TaskComponent } from '../../components/ui/task-card/task.component'; 
-import {ITaskCard, TaskStatuses} from './config/config'
+import {IDataTransfer, ITaskCard, TaskStatuses} from './config/config'
 import { MatIcon } from '@angular/material/icon';
 import { MatSidenavModule} from '@angular/material/sidenav';
 import {CommonModule} from '@angular/common'
@@ -21,6 +21,7 @@ export class BaseComponent {
   ngOnInit(){
     this.statuses.forEach(status=>this.localStorageService.init(status))
     this.localStorageService.storageObservable$.subscribe(data=>{
+      console.log(data)
       this.reduceData(data)
     })
   }
@@ -30,14 +31,28 @@ public cards:ITaskCard[] = []
 
   //для открытия side-menu
 
-  reduceData(val:ITaskCard[]){
-    for(let i = 0;i<val.length;i++){
-      if(this.cards.includes(val[i])){
-        this.cards = this.cards.filter(card=>card.taskId!=val[i].taskId)
-      }else{
-        this.cards=[...val, ...this.cards]
-      }
+  reduceData(data:IDataTransfer){
+    switch (data.method) {
+      case 'SET':
+        this.cards=[data.data, ...this.cards]
+        break;
+      case "DELETE":
+          this.cards = this.cards.filter(card=>card.taskId!=data.data.taskId)
+        break
+      case 'EDIT':
+        let reduced = this.cards.filter(el => el.taskId != data.data.taskId)
+        this.cards = [data.data, ...reduced]
+        break
+      default:
+        break;
     }
+    // for(let i = 0;i<val.length;i++){
+    //   if(this.cards.includes(val[i])){
+        
+    //   }else{
+        
+    //   }
+    // }
     console.log(this.cards)
   }
 }
