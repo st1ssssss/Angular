@@ -5,15 +5,16 @@ type ILocalStorageServiceMethods = 'SET'|'EDIT'|'GET'|'DELETE'
 
 
 export interface ITaskCard{
-    taskId:number
+    taskId:string
     taskTitle: string
     taskAssignedTo: string|undefined
     taskPriority: taskPriorities|undefined
     taskStatus: TaskStatuses
     taskDeadline: Date|undefined
+    taskDescription:string|undefined
 }
 
 export interface IDataTransfer {
-    data:ITaskCard,
+    data:ITaskCard[],
     method: ILocalStorageServiceMethods
    }

@@ -1,1 +1,22 @@
-<p>task-page works!</p>
+<mat-card class="task-page-card">
+    <mat-card-header>
+        <mat-card-title>
+            {{cardForPage.taskTitle}}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Assigner {{cardForPage.taskAssignedTo}}
+        </mat-card-subtitle>
+        <mat-card-subtitle>
+            Priority {{cardForPage.taskPriority}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <form #f="ngForm" class="flex-col" (ngSubmit)="submitChanges(f)">
+            <p>Task description</p>
+            <mat-form-field class="example-full-width">
+                <textarea type="" name="taskDescription" [ngModel]="cardForPage.taskDescription" matInput [value]="cardForPage.taskDescription"></textarea>
+            </mat-form-field>
+            <button  mat-button>Submit</button>
+        </form>
+    </mat-card-content>
+</mat-card>

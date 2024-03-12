@@ -7,7 +7,7 @@ import { ITaskCard } from '../../pages/base/config/config';
 })
 export class DataService {
   private cardInfoSource = new BehaviorSubject<ITaskCard>({
-    taskId:123, taskTitle:'', taskAssignedTo:'', taskPriority:undefined,taskDeadline:new Date, taskStatus:'TODO'
+    taskId:'123', taskTitle:'', taskAssignedTo:'', taskPriority:undefined,taskDeadline:new Date, taskStatus:'TODO', taskDescription:''
   })
   private openDrawer = new BehaviorSubject<boolean>(false)
   currentCardInfo = this.cardInfoSource.asObservable()

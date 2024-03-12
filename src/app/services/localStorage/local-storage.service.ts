@@ -11,7 +11,15 @@ export class LocalStorageService {
   constructor() {
    }
    dataTransfer:IDataTransfer
-
+   defaultCard:ITaskCard = {
+      taskTitle:'asd',
+      taskAssignedTo:'worker1',
+      taskDeadline: new Date,
+      taskId: '1234234',
+      taskPriority: 'HIGH',
+      taskStatus:'TODO',
+      taskDescription:''
+   }
    init(key:KeysLocalStorage){
     localStorage.setItem(key, JSON.stringify([]))
   }
@@ -35,11 +43,15 @@ export class LocalStorageService {
    }
    }
 
+  notEmpty(){
+    return localStorage.getItem('CARDS') ? true : false
+  }
+
   setTask(card:ITaskCard){
     const storedData =  JSON.parse(localStorage.getItem(card.taskStatus)!)
     localStorage.setItem(card.taskStatus, JSON.stringify([card, ...storedData]))
     this.dataTransfer = {
-      data:card,
+      data:[card],
       method:'SET'
     }
     this.set(card)
@@ -52,23 +64,29 @@ export class LocalStorageService {
     const reduceData = storedData.filter(el=>el.taskId != card.taskId)
     localStorage.setItem(card.taskStatus, JSON.stringify([card, ...reduceData]))
     this.dataTransfer = {
-      data:card,
+      data:[card],
       method:'EDIT'
     }
-  this.edit(card)
+    this.edit(card)
     this.storageSubject.next(this.dataTransfer)
    }
 
-  get(status: TaskStatuses): Observable<ITaskCard[]> {
-    return new Observable((observer) => {
-      observer.next(JSON.parse(localStorage.getItem(status)!));
-    });
+  get(key: KeysLocalStorage):ITaskCard[] {
+    return JSON.parse(localStorage.getItem(key)!)
   }
   
-  getTask(id:number){
-    return new Observable((observer) => {
-      observer.next(JSON.parse(localStorage.getItem(status)!));
-    });
+  getTask(id:string){
+    const data:ITaskCard[] = JSON.parse(localStorage.getItem('CARDS')!)
+    console.log(data)
+    const reducedData = data.find(el=>{
+          return el.taskId == id
+        })
+        console.log(reducedData)
+    if(reducedData){
+      return reducedData
+    }else{
+      return this.defaultCard
+    }
   }
 
   deleteOne(card:ITaskCard) {
@@ -77,7 +95,7 @@ export class LocalStorageService {
     if (reducedData) {
       localStorage.setItem(card.taskStatus, JSON.stringify(reducedData))
       this.dataTransfer = {
-        data:card,
+        data:[card],
         method:'DELETE'
       }
       this.delete(card)

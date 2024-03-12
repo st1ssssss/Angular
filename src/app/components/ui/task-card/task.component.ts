@@ -48,9 +48,7 @@ priorityClass(){
       return ''
   }
 }
-moveToPage(){
 
-}
 removeTask(){
   this.localStorageService.deleteOne(this.taskCardInfo)
 }

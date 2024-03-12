@@ -45,7 +45,8 @@ submitChanges(val: NgForm){
     taskId: this.cardInfo.taskId,
     taskDeadline: val.value.taskDeadline,
     taskPriority: val.value.taskPriority,
-    taskStatus: val.value.taskStatus
+    taskStatus: val.value.taskStatus,
+    taskDescription: ''
   }
   console.log(this.previousCardInfo)
   this.localStorageServices.editTask(this.cardInfo, this.previousCardInfo)

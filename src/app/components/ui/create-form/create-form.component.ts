@@ -29,7 +29,8 @@ export class CreateFormComponent {
         taskAssignedTo:'',
         taskPriority:undefined,
         taskStatus: this.status,
-        taskId: Date.now()
+        taskId: String(Date.now()),
+        taskDescription:''
       }
       this.localStorageService.setTask(this.task)
       this.titleCreate = ''
