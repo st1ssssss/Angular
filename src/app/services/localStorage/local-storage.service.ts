@@ -36,7 +36,7 @@ export class LocalStorageService {
     this.storageSubject.next(this.dataTransfer)
    }
 
-  get(status: TaskStatuses): Observable<ITaskCard[]> {
+  get(id: number): Observable<ITaskCard[]> {
     return new Observable((observer) => {
       observer.next(JSON.parse(localStorage.getItem(status)!));
     });

@@ -7,22 +7,24 @@ import {MatButtonModule} from '@angular/material/button';
 import { LocalStorageService } from '../../../services/localStorage/local-storage.service';
 import { Subscription } from 'rxjs';
 import { DataService } from '../../../services/dataService/data-service.service';
-
+import { ActivatedRoute,RouterLink } from '@angular/router';
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [MatIconModule, MatCardModule, CommonModule, MatButtonModule],
+  imports: [RouterLink, MatIconModule, MatCardModule, CommonModule, MatButtonModule],
   templateUrl: './task.component.html',
   styleUrl: './task.component.sass'
 })
 export class TaskComponent implements OnInit, OnDestroy {
-constructor(private localStorageService:LocalStorageService, private DataService:DataService){
+constructor(private router: ActivatedRoute, private localStorageService:LocalStorageService, private DataService:DataService){
 }
 
 ngOnInit(): void {
     this.subscription = this.DataService.currentCardInfo.subscribe(card=>this.dataServCard = card)
     this.subscriptionDrawer = this.DataService.currentOpenDrawer.subscribe(drawer => this.openedDrawer = drawer)
-
+    this.router.queryParams.subscribe((params)=>{
+      console.log(params)
+    })
 }
 ngOnDestroy(): void {
   this.subscription.unsubscribe()
@@ -45,6 +47,9 @@ priorityClass(){
     default:
       return ''
   }
+}
+moveToPage(){
+
 }
 removeTask(){
   this.localStorageService.deleteOne(this.taskCardInfo)

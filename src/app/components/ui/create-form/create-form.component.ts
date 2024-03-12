@@ -6,11 +6,13 @@ import {NgForm} from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @Component({
   selector: 'app-create-form',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule ,MatIcon,  FormsModule, ReactiveFormsModule],
+  imports: [MatButtonModule, MatInputModule, MatFormFieldModule ,MatIcon,  FormsModule, ReactiveFormsModule],
   templateUrl: './create-form.component.html',
   styleUrl: './create-form.component.sass'
 })

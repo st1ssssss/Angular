@@ -46,13 +46,6 @@ public cards:ITaskCard[] = []
       default:
         break;
     }
-    // for(let i = 0;i<val.length;i++){
-    //   if(this.cards.includes(val[i])){
-        
-    //   }else{
-        
-    //   }
-    // }
     console.log(this.cards)
   }
 }

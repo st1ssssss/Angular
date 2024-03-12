@@ -5,6 +5,6 @@ import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
     {path:'', component:BaseComponent},
-    {path:'task/:id', component:TaskPageComponent},
+    {path:'tasks/task', component:TaskPageComponent},
     {path:'**', redirectTo:'', component: BaseComponent}
 ];
