@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TaskComponent } from '../../components/ui/task-card/task.component'; 
-import {IDataTransfer, ITaskCard, TaskStatuses} from './config/config'
+import {IDataTransfer, ITaskCard, KeysLocalStorage, TaskStatuses} from './config/config'
 import { MatIcon } from '@angular/material/icon';
 import { MatSidenavModule} from '@angular/material/sidenav';
 import {CommonModule} from '@angular/common'
@@ -19,14 +19,14 @@ export class BaseComponent {
   constructor(private localStorageService: LocalStorageService){
   }
   ngOnInit(){
-    this.statuses.forEach(status=>this.localStorageService.init(status))
+    this.keysLocalStorage.forEach(key=>this.localStorageService.init(key))
     this.localStorageService.storageObservable$.subscribe(data=>{
       console.log(data)
       this.reduceData(data)
     })
   }
-
-  statuses:TaskStatuses[] = ['TODO','INPROGRESS', 'DONE']
+statuses:TaskStatuses[] = ['TODO','INPROGRESS', 'DONE']
+keysLocalStorage:KeysLocalStorage[] = [...this.statuses, 'CARDS']
 public cards:ITaskCard[] = [] 
 
   //для открытия side-menu

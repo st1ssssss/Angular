@@ -57,6 +57,5 @@ removeTask(){
 editTask(){
 this.DataService.createCardInfo(this.taskCardInfo)
 this.DataService.toggleOpenDrawer(true)
-console.log(this.taskCardInfo)
 }
 }

@@ -2,11 +2,11 @@
     <form #f="ngForm" class="flex-col" (ngSubmit)="submitChanges(f)">
         <mat-form-field class="example-full-width">
             <mat-label>Task title</mat-label>
-            <input name="taskTitle" ngModel matInput [value]="cardInfo.taskTitle">
+            <input name="taskTitle" [ngModel]="cardInfo.taskTitle" matInput [value]="cardInfo.taskTitle">
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>Task status</mat-label>
-            <mat-select name="taskStatus" ngModel matNativeControl required>
+            <mat-select name="taskStatus" [ngModel]="cardInfo.taskStatus" matNativeControl required>
                 @for (item of optionTaskStatuses; track item){
                     <mat-option [value]="item" >{{item}}</mat-option>
                 }
@@ -14,11 +14,11 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>Task assigner</mat-label>
-            <input name="taskAssignedTo" ngModel matInput [value]="cardInfo.taskAssignedTo">
+            <input name="taskAssignedTo" [ngModel]="cardInfo.taskAssignedTo" matInput [value]="cardInfo.taskAssignedTo">
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>Task Priority</mat-label>
-            <mat-select name="taskPriority" ngModel matNativeControl required>
+            <mat-select name="taskPriority" [ngModel]="cardInfo.taskPriority" matNativeControl required>
                 @for (item of optionTaskPriorities; track item){
                     <mat-option [value]="item" >{{item}}</mat-option>
                 }
@@ -26,7 +26,7 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <mat-label>Task deadline</mat-label>
-            <input name="taskDeadline" ngModel matInput type="date">
+            <input name="taskDeadline" [ngModel]="cardInfo.taskDeadline" matInput type="date">
         </mat-form-field>
         <button  mat-button>Submit</button>
     </form>

@@ -17,6 +17,9 @@ export class DataService {
   createCardInfo(val:ITaskCard){
     this.cardInfoSource.next(val)
   }
+  getPreviousCardInfo(){
+    return this.cardInfoSource.value
+  }
   toggleOpenDrawer(val:boolean){
     this.openDrawer.next(val)
   }

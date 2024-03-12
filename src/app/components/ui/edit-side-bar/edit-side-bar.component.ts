@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class EditSideBarComponent implements OnInit, OnDestroy {
   constructor(private DataService:DataService, private localStorageServices: LocalStorageService){}
   cardInfo:ITaskCard
+  previousCardInfo: ITaskCard
   subscriptionCard:Subscription
   subscriptionDrawer:Subscription
   optionTaskPriorities: taskPriorities[] = ['LOW', 'MEDIUM','HIGH']
@@ -37,6 +38,7 @@ ngOnDestroy(): void {
 }
 
 submitChanges(val: NgForm){
+  this.previousCardInfo = this.DataService.getPreviousCardInfo()
   this.cardInfo = {
     taskTitle: val.value.taskTitle,
     taskAssignedTo: val.value.taskAssignedTo,
@@ -45,7 +47,8 @@ submitChanges(val: NgForm){
     taskPriority: val.value.taskPriority,
     taskStatus: val.value.taskStatus
   }
-  this.localStorageServices.editTask(this.cardInfo)
+  console.log(this.previousCardInfo)
+  this.localStorageServices.editTask(this.cardInfo, this.previousCardInfo)
   this.DataService.toggleOpenDrawer(false)
 }
 }
