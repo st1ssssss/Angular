@@ -7,11 +7,11 @@ import {CommonModule} from '@angular/common'
 import { BoardComponent } from '../../components/ui/board/board.component';
 import { LocalStorageService } from '../../services/localStorage/local-storage.service';
 import { EditSideBarComponent } from '../../components/ui/edit-side-bar/edit-side-bar.component';
-
+import { FilterComponent } from '../../components/ui/filter/filter.component';
 @Component({
   selector: 'app-base',
   standalone: true,
-  imports: [EditSideBarComponent, BoardComponent,TaskComponent,MatIcon, MatSidenavModule, CommonModule],
+  imports: [FilterComponent, EditSideBarComponent, BoardComponent,TaskComponent,MatIcon, MatSidenavModule, CommonModule],
   templateUrl: './base.component.html',
   styleUrl: './base.component.sass'
 })
@@ -35,17 +35,12 @@ public cards:ITaskCard[] = []
         this.reduceData(data)
       })
     }else{
-      for(let i = 0;i<localStorage.length;i++){
-        if(i!=1){
-          const data = this.localStorageService.get(localStorage.key(i)! as KeysLocalStorage)
+      const data = this.localStorageService.get('CARDS')
           data.forEach(el=> this.reduceData({data: [el], method:'SET'}))
           this.localStorageService.storageObservable$.subscribe(data=>{
             console.log(data)
             this.reduceData(data)
           })
-        }
-      }
-      
     }
   }
 

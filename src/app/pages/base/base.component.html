@@ -1,4 +1,5 @@
 <mat-drawer-container autosize>
+    <app-filter></app-filter>
     <div class="base-comp">
         <div class="base-comp-boards">
             <app-board *ngFor="let status of statuses" [cardsInfo]="cards" [title]="status">

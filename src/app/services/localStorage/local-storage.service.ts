@@ -10,6 +10,9 @@ export class LocalStorageService {
   public storageObservable$ = this.storageSubject.asObservable();
   constructor() {
    }
+  low:ITaskCard[]
+  mid:ITaskCard[]
+  high:ITaskCard[]
    dataTransfer:IDataTransfer
    defaultCard:ITaskCard = {
       taskTitle:'asd',
@@ -46,6 +49,34 @@ export class LocalStorageService {
   notEmpty(){
     return localStorage.getItem('CARDS') ? true : false
   }
+
+  // filterCardsLocal(filter:string){
+  //   switch (filter) {
+  //     // case 'workers':
+  //     //   const data = this.get('CARDS')
+  //     //   let worker:ITaskCard[] = data.filter(el=>{
+
+  //     //   })
+  //     //   break;
+  //     // case 'deadline':
+        
+  //     //   break;
+  //     case 'priority':
+  //       const data = this.get('CARDS')
+  //       console.log(data)
+  //       data.forEach(el=>{
+  //         if(el.taskPriority === 'LOW'){
+  //           console.log(el)
+            
+  //         }
+  //       })
+  //       console.log(this.low)
+  //       this.storageSubject.next([...this.low])
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   setTask(card:ITaskCard){
     const storedData =  JSON.parse(localStorage.getItem(card.taskStatus)!)

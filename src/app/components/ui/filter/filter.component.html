@@ -1,0 +1,11 @@
+<form #f="ngForm" class="flex-col" (ngSubmit)="filterCards(f)">
+    <mat-form-field>
+        <mat-select name="filter" [ngModel]="mode" matNativeControl required>
+            @for (filter of filters; track filter){
+                <mat-option [value]="filter" >{{filter}}</mat-option>
+            }
+        </mat-select>
+        
+    </mat-form-field>
+    <button mat-button>Filter</button>
+</form>
