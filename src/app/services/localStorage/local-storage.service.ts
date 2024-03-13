@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { IDataTransfer, ITaskCard, KeysLocalStorage, TaskStatuses } from '../../pages/base/config/config';
+import { IDataTransfer, IFilterConfig, ITaskCard, KeysLocalStorage, TaskStatuses } from '../../pages/base/config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,7 @@ export class LocalStorageService {
   public storageObservable$ = this.storageSubject.asObservable();
   constructor() {
    }
-  low:ITaskCard[]
-  mid:ITaskCard[]
-  high:ITaskCard[]
+  filtered:ITaskCard[]=[]
    dataTransfer:IDataTransfer
    defaultCard:ITaskCard = {
       taskTitle:'asd',
@@ -26,16 +24,22 @@ export class LocalStorageService {
    init(key:KeysLocalStorage){
     localStorage.setItem(key, JSON.stringify([]))
   }
-
+  
+  private setWorker(card:ITaskCard){
+    const storedData:string[] =  JSON.parse(localStorage.getItem('WORKERS')!)
+    if(storedData.indexOf(card.taskAssignedTo!, 0)==-1){
+      localStorage.setItem('WORKERS', JSON.stringify([card.taskAssignedTo, ...storedData]))
+      this.storageSubject.next({data:[card.taskAssignedTo, ...storedData], method:'FILTER'})
+    }
+  }
   private set(card:ITaskCard){
-    const storedData =  JSON.parse(localStorage.getItem('CARDS')!)
+    const storedData:ITaskCard[] =  JSON.parse(localStorage.getItem('CARDS')!)
     localStorage.setItem('CARDS', JSON.stringify([card, ...storedData]))
   }
   private edit(card:ITaskCard){
     const storedData:ITaskCard[] =  JSON.parse(localStorage.getItem('CARDS')!)
     const reduceData = storedData.filter(el=>el.taskId != card.taskId)
-    console.log(storedData)
-    console.log(reduceData)
+    this.setWorker(card)
     localStorage.setItem('CARDS', JSON.stringify([card, ...reduceData]))
    }
    private delete(card:ITaskCard){
@@ -45,38 +49,65 @@ export class LocalStorageService {
       localStorage.setItem('CARDS', JSON.stringify(reducedData))
    }
    }
+   private deleteWorker(card:ITaskCard){
+    const storedCards:ITaskCard[] = JSON.parse(localStorage.getItem('CARDS')!)
+    let storedData:string[] =  JSON.parse(localStorage.getItem('WORKERS')!)
+    const indexOfWorker = storedData.indexOf(card.taskAssignedTo!, 0)
+    if(indexOfWorker!=-1){
+      console.log(indexOfWorker)
+      console.log(storedCards)
+      const flag = storedCards.filter(el=>el.taskAssignedTo===storedData[indexOfWorker])
+      console.log(flag)
+      if(flag.length===1)
+      storedData = storedData.filter(el=>el!=card.taskAssignedTo)
+      localStorage.setItem('WORKERS', JSON.stringify([ ...storedData]))
+      this.storageSubject.next({data:[ ...storedData], method:'FILTER'})
+    }
+   }
 
   notEmpty(){
     return localStorage.getItem('CARDS') ? true : false
   }
+  notEmpryWorkers(){
+    return localStorage.getItem('WORKERS') ? true : false
 
-  // filterCardsLocal(filter:string){
-  //   switch (filter) {
-  //     // case 'workers':
-  //     //   const data = this.get('CARDS')
-  //     //   let worker:ITaskCard[] = data.filter(el=>{
+  }
 
-  //     //   })
-  //     //   break;
-  //     // case 'deadline':
-        
-  //     //   break;
-  //     case 'priority':
-  //       const data = this.get('CARDS')
-  //       console.log(data)
-  //       data.forEach(el=>{
-  //         if(el.taskPriority === 'LOW'){
-  //           console.log(el)
-            
-  //         }
-  //       })
-  //       console.log(this.low)
-  //       this.storageSubject.next([...this.low])
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+  filterCardsLocal(filter:IFilterConfig){
+
+    if(filter.priority!=undefined&&filter.worker!=undefined){
+      const data = this.get('CARDS')
+      data.forEach(el=>{
+        if(el.taskPriority===filter.priority&&el.taskAssignedTo===filter.worker){
+          this.filtered = [el, ...this.filtered]
+        }
+      })
+      this.storageSubject.next({data: this.filtered, method: 'GET'})
+      this.filtered=[]
+    } else if(filter.priority!=undefined&&filter.worker==undefined){
+      const data = this.get('CARDS')
+      data.forEach(el=>{
+        if(el.taskPriority===filter.priority){
+          this.filtered = [el, ...this.filtered]
+        }
+      })
+      this.storageSubject.next({data: this.filtered, method: 'GET'})
+      this.filtered=[]
+    }else if(filter.priority==undefined&&filter.worker!=undefined){
+      const data = this.get('CARDS')
+      data.forEach(el=>{
+        if(el.taskAssignedTo===filter.worker){
+          this.filtered = [el, ...this.filtered]
+        }
+      })
+      this.storageSubject.next({data: this.filtered, method: 'GET'})
+      this.filtered=[]
+    }else{
+      const data = this.get('CARDS')
+      this.storageSubject.next({data: data, method: 'GET'})
+    }
+    
+  }
 
   setTask(card:ITaskCard){
     const storedData =  JSON.parse(localStorage.getItem(card.taskStatus)!)
@@ -98,6 +129,7 @@ export class LocalStorageService {
       data:[card],
       method:'EDIT'
     }
+    this.deleteWorker(card)
     this.edit(card)
     this.storageSubject.next(this.dataTransfer)
    }
@@ -105,7 +137,10 @@ export class LocalStorageService {
   get(key: KeysLocalStorage):ITaskCard[] {
     return JSON.parse(localStorage.getItem(key)!)
   }
-  
+  getWorkers():string[]{
+    const workers = JSON.parse(localStorage.getItem('WORKERS')!)
+    return workers
+  }
   getTask(id:string){
     const data:ITaskCard[] = JSON.parse(localStorage.getItem('CARDS')!)
     console.log(data)
@@ -129,6 +164,7 @@ export class LocalStorageService {
         data:[card],
         method:'DELETE'
       }
+      this.deleteWorker(card)
       this.delete(card)
       this.storageSubject.next(this.dataTransfer)
     }

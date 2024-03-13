@@ -1,7 +1,8 @@
 export type taskPriorities = 'LOW'|'MEDIUM'|'HIGH' 
 export type TaskStatuses = 'TODO'|'INPROGRESS'|'DONE'
-export type KeysLocalStorage = 'TODO'|'INPROGRESS'|'DONE'|'CARDS'
-type ILocalStorageServiceMethods = 'SET'|'EDIT'|'GET'|'DELETE'
+export type KeysLocalStorage = TaskStatuses|'CARDS'|'WORKERS'
+export type FilterPriorities  = taskPriorities|''
+type ILocalStorageServiceMethods = 'SET'|'EDIT'|'GET'|'DELETE'|'FILTER'
 
 
 export interface ITaskCard{
@@ -18,3 +19,8 @@ export interface IDataTransfer {
     data:ITaskCard[],
     method: ILocalStorageServiceMethods
    }
+
+export interface IFilterConfig {
+    priority: taskPriorities|undefined,
+    worker: string|undefined
+}

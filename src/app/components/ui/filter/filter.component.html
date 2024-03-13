@@ -1,11 +1,19 @@
 <form #f="ngForm" class="flex-col" (ngSubmit)="filterCards(f)">
     <mat-form-field>
-        <mat-select name="filter" [ngModel]="mode" matNativeControl required>
-            @for (filter of filters; track filter){
-                <mat-option [value]="filter" >{{filter}}</mat-option>
+        <mat-label>Choose priority</mat-label>
+        <mat-select name="priority" [ngModel]="mode" matNativeControl required>
+            @for (priority of priorities; track priority){
+                <mat-option [value]="priority" >{{priority}}</mat-option>
             }
         </mat-select>
-        
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Choose worker</mat-label>
+        <mat-select name="worker" [ngModel]="mode" matNativeControl required>
+            @for (worker of workers; track worker){
+                <mat-option [value]="worker" >{{worker}}</mat-option>
+            }
+        </mat-select>
     </mat-form-field>
     <button mat-button>Filter</button>
 </form>

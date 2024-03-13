@@ -24,7 +24,7 @@ export class BaseComponent {
   }
   
 statuses:TaskStatuses[] = ['TODO','INPROGRESS', 'DONE']
-keysLocalStorage:KeysLocalStorage[] = [...this.statuses, 'CARDS']
+keysLocalStorage:KeysLocalStorage[] = [...this.statuses, 'CARDS', 'WORKERS']
 public cards:ITaskCard[] = [] 
 
   private initialSub(){
@@ -56,6 +56,9 @@ public cards:ITaskCard[] = []
         let reduced = this.cards.filter(el => el.taskId != data.data[0].taskId)
         this.cards = [...data.data, ...reduced]
         break
+      case 'GET':
+        this.cards=[...data.data]
+        break;
       default:
         break
     }
